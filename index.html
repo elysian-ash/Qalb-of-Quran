@@ -3,50 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quran Journal 🌸</title>
+  <title>✨ Quran Journal Dashboard</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap');
+
     body {
-      font-family: 'Georgia', serif;
-      background-color: #fdf6f9;
-      color: #444;
+      margin: 0;
+      font-family: 'EB Garamond', serif;
+      background-color: #fff7fb;
+      color: #5b4b58;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 2rem;
+      min-height: 100vh;
     }
 
-    h1 {
-      font-size: 2rem;
-      color: #c26b9d;
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      background: #ffe3ee;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #cc5f8e;
+      margin: 0;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .widget {
+      background: #fff0f7;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .widget h2 {
+      font-size: 1.5rem;
+      color: #a14472;
       margin-bottom: 1rem;
     }
 
     .ayah-box {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 320px;
       background: #fff0f6;
-      border: 1px solid #f0d9e7;
-      padding: 1.5rem;
       border-radius: 1rem;
-      max-width: 600px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .arabic {
-      font-size: 1.5rem;
-      color: #b2558c;
+      font-size: 1.3rem;
+      color: #a14472;
       margin-bottom: 0.5rem;
     }
 
     .translation {
       font-size: 1rem;
-      color: #555;
+      color: #5b4b58;
       margin-bottom: 1rem;
     }
 
     button {
       background-color: #f8b8d4;
       color: #fff;
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
@@ -54,27 +86,62 @@
     }
 
     button:hover {
-      background-color: #e09ab6;
+      background-color: #e89ab9;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      border: 1px solid #f4cadd;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      font-size: 1rem;
+      background: #fffafd;
+      resize: vertical;
     }
   </style>
 </head>
 <body>
-  <h1>🌷 My Quran Journal</h1>
+  <header>
+    <h1>🌸 Digital Quran Journal</h1>
+  </header>
+
   <div class="ayah-box">
     <div class="arabic" id="ayahArabic">Loading...</div>
     <div class="translation" id="ayahTranslation"></div>
-    <button onclick="generateRandomAyah()">🌸 Show Another Ayah</button>
+    <button onclick="generateRandomAyah()">🌸 New Ayah</button>
   </div>
+
+  <main class="dashboard">
+    <section class="widget">
+      <h2>📕 Daily Reflection</h2>
+      <textarea placeholder="Write your thoughts..."></textarea>
+    </section>
+
+    <section class="widget">
+      <h2>🔠 Favorite Ayahs</h2>
+      <textarea placeholder="List your favorite ayahs..."></textarea>
+    </section>
+
+    <section class="widget">
+      <h2>✨ Duas & Goals</h2>
+      <textarea placeholder="Make duas, set intentions..."></textarea>
+    </section>
+
+    <section class="widget">
+      <h2>⌚ Mood Tracker</h2>
+      <textarea placeholder="How do you feel today?"></textarea>
+    </section>
+  </main>
 
   <script>
     let ayahs = [];
 
-    // Load the ayahs from your JSON file
     fetch('real_ayahs_1000.json')
       .then(response => response.json())
       .then(data => {
         ayahs = data;
-        generateRandomAyah(); // Show one immediately when page loads
+        generateRandomAyah();
       });
 
     function generateRandomAyah() {
