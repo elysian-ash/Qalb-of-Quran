@@ -3,91 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quran Journal</title>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Scheherazade+New&display=swap" rel="stylesheet">
-
+  <title>Quran Journal 🌸</title>
   <style>
     body {
-      font-family: 'Playfair Display', serif;
-      background-color: #fffaf5;
+      font-family: 'Georgia', serif;
+      background-color: #fdf6f9;
+      color: #444;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
     }
-    .calligraphy {
-      font-family: 'Scheherazade New', serif;
-      font-size: 2.2rem;
-      color: #a155b9;
+
+    h1 {
+      font-size: 2rem;
+      color: #c26b9d;
+      margin-bottom: 1rem;
+    }
+
+    .ayah-box {
+      background: #fff0f6;
+      border: 1px solid #f0d9e7;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .arabic {
+      font-size: 1.5rem;
+      color: #b2558c;
+      margin-bottom: 0.5rem;
+    }
+
+    .translation {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: #f8b8d4;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #e09ab6;
     }
   </style>
 </head>
-
-<body class="min-h-screen flex flex-col items-center justify-start px-6 py-10">
-
-  <!-- Header -->
-  <div class="text-center mb-8">
-    <h1 class="text-3xl font-bold text-pink-600">🌸 Bismillah 🌸</h1>
-    <p class="text-gray-600 mt-2 text-lg">Welcome to your Quran Journal</p>
+<body>
+  <h1>🌷 My Quran Journal</h1>
+  <div class="ayah-box">
+    <div class="arabic" id="ayahArabic">Loading...</div>
+    <div class="translation" id="ayahTranslation"></div>
+    <button onclick="generateRandomAyah()">🌸 Show Another Ayah</button>
   </div>
 
-  <!-- Verse of the Day -->
-  <div class="bg-pink-100 p-6 rounded-2xl shadow-md w-full max-w-xl mb-6">
-    <p class="calligraphy text-center" id="ayahArabic">فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا</p>
-    <p class="text-center text-gray-700 mt-2" id="ayahTranslation">
-      “Indeed, with hardship comes ease.” — Surah Ash-Sharh 94:6
-    </p>
-  </div>
-
-  <!-- Dashboard Buttons -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
-    <a href="#" class="bg-white border border-pink-300 rounded-xl p-4 shadow hover:shadow-lg transition text-center text-pink-700 font-medium">
-      📖 Add Reflection
-    </a>
-    <a href="#" class="bg-white border border-pink-300 rounded-xl p-4 shadow hover:shadow-lg transition text-center text-pink-700 font-medium">
-      💖 Favorite Ayahs
-    </a>
-    <a href="#" class="bg-white border border-pink-300 rounded-xl p-4 shadow hover:shadow-lg transition text-center text-pink-700 font-medium">
-      🌙 Browse Quran
-    </a>
-    <a href="#" onclick="generateRandomAyah()" class="bg-white border border-pink-300 rounded-xl p-4 shadow hover:shadow-lg transition text-center text-pink-700 font-medium">
-      ✨ Ayah by Mood
-    </a>
-  </div>
-
-  <!-- Footer -->
-  <footer class="mt-10 text-sm text-gray-400">
-    built with love by ayesha 🌷
-  </footer>
-
-  <!-- JS: Random Ayah Generator (demo) -->
   <script>
-    const ayahs = [
-      {
-        arabic: "فَإِنَّ مَعَ ٱلْعُسْرِ يُسْرًا",
-        translation: "Indeed, with hardship comes ease. — Surah Ash-Sharh 94:6"
-      },
-      {
-        arabic: "اللَّهُ نُورُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ",
-        translation: "Allah is the Light of the heavens and the earth. — Surah An-Nur 24:35"
-      },
-      {
-        arabic: "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ",
-        translation: "And He is with you wherever you are. — Surah Al-Hadid 57:4"
-      },
-      {
-        arabic: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ",
-        translation: "My mercy encompasses all things. — Surah Al-A'raf 7:156"
-      }
-    ];
+    let ayahs = [];
+
+    // Load the ayahs from your JSON file
+    fetch('real_ayahs_1000.json')
+      .then(response => response.json())
+      .then(data => {
+        ayahs = data;
+        generateRandomAyah(); // Show one immediately when page loads
+      });
 
     function generateRandomAyah() {
+      if (ayahs.length === 0) return;
       const random = ayahs[Math.floor(Math.random() * ayahs.length)];
       document.getElementById("ayahArabic").textContent = random.arabic;
       document.getElementById("ayahTranslation").textContent = random.translation;
     }
   </script>
-
 </body>
 </html>
